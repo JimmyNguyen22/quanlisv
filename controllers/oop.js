@@ -4,27 +4,51 @@
 // V : View là nơi chứa các file html ( giao diện html)
 // C : Controllers là nơi chứa các file xử lí cho giao diện cùng tên
 
-var mangSinhVien = [];
+let mangSinhVien = [];
 
 document.querySelector('#btnThemSinhVien').onclick = function() {
     // input: thông tin sinh vien: SinhVien
-    var sv = new SinhVien();
-    // Lấy thông tin từ giao diện đưa vào input sv
-    sv['maSinhVien'] = document.querySelector('#maSinhVien').value;
+    let sv = new SinhVien();
+    // Lấy thông tin từ giao diện đưa vào input sv 
+    //sv['maSinhVien'] 
+    sv.maSinhVien = document.querySelector('#maSinhVien').value;
     sv.tenSinhVien = document.querySelector('#tenSinhVien').value;
     sv.email = document.querySelector('#email').value;
     sv.matKhau = document.querySelector('#matKhau').value;
 
-    var ngaySinh = new Date(document.querySelector('#ngaySinh').value);
+    let ngaySinh = new Date(document.querySelector('#ngaySinh').value);
     sv.ngaySinh = ngaySinh.toLocaleDateString();
 
     sv.khoaHoc = document.querySelector('#khoaHoc').value;
-    sv.diemToan = document.querySelector('#diemToan').value;
-    sv.diemLy = document.querySelector('#diemLy').value;
-    sv.diemHoa = document.querySelector('#diemHoa').value;
+    sv.diemToan = Number(document.querySelector('#diemToan').value);
+    sv.diemLy = Number(document.querySelector('#diemLy').value);
+    sv.diemHoa = Number(document.querySelector('#diemHoa').value);
+
+    //------------- Bắt lỗi khi người dùng nhập ko hợp lệ validation
+    // .trim() loai bỏ khoảng trống của string
+    let valid = true;
+    // kiểm tra rỗng
+    valid &= kiemTraRong(sv.maSinhVien, '#errorMaSinhVien', 'Mã sinh viên') & kiemTraRong(sv.tenSinhVien, '#errorTenSinhVien', 'Tên sinh viên') & kiemTraRong(sv.email, '#errorEmail', 'Email');
+
+    // kiểm tra định dạng
+    valid &= kiemTraKyTu(sv.tenSinhVien, '#errorTenSinhVien', 'Tên sinh viên ') & kiemTraSo(sv.diemToan, '#error_diemToan', ' Điểm toán') & kiemTraSo(sv.diemLy, '#error_diemLy', ' Điểm lý') & kiemTraSo(sv.diemHoa, '#error_diemHoa', ' Điểm hóa');
+
+    // let regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    // let ketQua = regex.test(sv.email);
+    // console.log(ketQua)
+
+
+    //kiểm tra biến cờ 
+    if (!valid) {
+        return;
+    }
+
+
+
+
+    //-----------
 
     //output html : string 
-
     /*
     // cách 1  tạo html = createElement
     // bước 1 tạo ra thẻ tr
@@ -83,7 +107,6 @@ document.querySelector('#btnThemSinhVien').onclick = function() {
 
     */
 
-
     // cach 2 : chuỗi innerHTML
 
     mangSinhVien.push(sv);
@@ -106,8 +129,9 @@ function renderTableSinhVien(arrSinhVien) {
         //hasOwnProperty : nếu có tên thuộc tính đó trong object thì trả về giá trị true, ko có trả về false
         if (!sv.hasOwnProperty('tinhDiemTrungBinh')) {
             // .__proto__.: mở rộng thuộc tính cua obj
-            sv.__proto__.tinhDiemTrungBinh = function() {
-                let diemTB = (Number(sv.diemToan) + Number(sv.diemLy) + Number(sv.diemHoa)) / 3;
+            // sv.__proto__.tinhDiemTrungBinh = function() {
+            sv.tinhDiemTrungBinh = function() {
+                let diemTB = (Number(this.diemToan) + Number(this.diemLy) + Number(this.diemHoa)) / 3;
                 return diemTB;
             }
         }
@@ -146,8 +170,8 @@ function suaSinhVien(maSVClick) {
             document.querySelector('#tenSinhVien').value = sinhVien.tenSinhVien;
             document.querySelector('#email').value = sinhVien.email;
             document.querySelector('#matKhau').value = sinhVien.matKhau;
-            let date = moment(sinhVien.ngaySinh).format('YYYY-DD-MM');
-            document.querySelector('#ngaySinh').value = date;
+            let day = moment(sinhVien.ngaySinh).format('YYYY-DD-MM');
+            document.querySelector('#ngaySinh').value = day;
             document.querySelector('#khoaHoc').value = sinhVien.khoaHoc;
             document.querySelector('#diemToan').value = sinhVien.diemToan;
             document.querySelector('#diemLy').value = sinhVien.diemLy;
@@ -217,6 +241,7 @@ function luuLocalStorage(key, value) {
 }
 
 function layLocalStorage(key) {
+    // kiểm tra xem local có key đó ko
     if (localStorage.getItem(key)) {
         return localStorage.getItem(key);
     }
@@ -225,10 +250,9 @@ function layLocalStorage(key) {
 
 // định nghĩa sự kiện khi trang load xong html
 window.onload = function() {
-    let value = layLocalStorage('mangSinhVien');
-    if (value !== undefined) {
+    if (layLocalStorage('mangSinhVien') !== undefined) {
         // biến đổi value thành mảng lại
-        mangSinhVien = JSON.parse(value);
+        mangSinhVien = JSON.parse(layLocalStorage('mangSinhVien'));
         // gọi hàm để từ mảng tạo ra table   
         renderTableSinhVien(mangSinhVien);
     }

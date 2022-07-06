@@ -19,10 +19,12 @@
                 <div class="form-group">
                     <p> Mã sinh viên </p>
                     <input type="text" class="form-control" id="maSinhVien">
+                    <p id="errorMaSinhVien" class="text text-danger"></p>
                 </div>
                 <div class="form-group">
                     <p> Email </p>
                     <input type="text" class="form-control" id="email">
+                    <p id="errorEmail" class="text text-danger"></p>
                 </div>
                 <div class="form-group">
                     <p>Ngày sinh </p>
@@ -33,6 +35,8 @@
                 <div class="form-group">
                     <p> Tên sinh viên </p>
                     <input type="text" class="form-control" id="tenSinhVien">
+                    <p id="errorTenSinhVien" class="text text-danger"></p>
+                    <p id="error_letterTenSinhVien" class="text text-danger"></p>
                 </div>
                 <div class="form-group">
                     <p> Mật khẩu </p>
@@ -50,14 +54,17 @@
                 <div class="col-4">
                     <p>Điểm toán</p>
                     <input type="number" class="form-control" id="diemToan">
+                    <p id="error_diemToan" class="text text-danger"></p>
                 </div>
                 <div class="col-4">
                     <p>Điểm lý</p>
                     <input type="number" class="form-control" id="diemLy">
+                    <p id="error_diemLy" class="text text-danger"></p>
                 </div>
                 <div class="col-4">
                     <p>Điểm hóa</p>
                     <input type="number" class="form-control" id="diemHoa">
+                    <p id="error_diemHoa" class="text text-danger"></p>
                 </div>
             </div>
             <div class="col-12 mt-2">
@@ -99,6 +106,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <!-- lib -->
+    <script scr="./utility_common_tools/method.js"></script>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
     <script>
         if (!window.moment) {
