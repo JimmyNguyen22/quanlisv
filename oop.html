@@ -25,10 +25,12 @@
                     <p> Email </p>
                     <input type="text" class="form-control" id="email">
                     <p id="errorEmail" class="text text-danger"></p>
+                    <p id="regexEmail" class="text text-danger"></p>
                 </div>
                 <div class="form-group">
                     <p>Ngày sinh </p>
                     <input type="date" class="form-control" id="ngaySinh">
+                    <p class="text text-danger error-ngay"></p>
                 </div>
             </div>
             <div class="col-6">
@@ -36,11 +38,14 @@
                     <p> Tên sinh viên </p>
                     <input type="text" class="form-control" id="tenSinhVien">
                     <p id="errorTenSinhVien" class="text text-danger"></p>
-                    <p id="error_letterTenSinhVien" class="text text-danger"></p>
+                    <p class="text text-danger error_letterTenSinhVien"></p>
                 </div>
                 <div class="form-group">
                     <p> Mật khẩu </p>
                     <input type="password" class="form-control" id="matKhau">
+                    <p class="text text-danger errorDoDai"></p>
+                    <p class="text text-danger errorPW"></p>
+
                 </div>
                 <div class="form-group">
                     <p> Khóa học </p>
@@ -53,18 +58,21 @@
             <div class="col-12 mt-2 row">
                 <div class="col-4">
                     <p>Điểm toán</p>
-                    <input type="number" class="form-control" id="diemToan">
+                    <input class="form-control" id="diemToan">
                     <p id="error_diemToan" class="text text-danger"></p>
+                    <p class="text text-danger mix_max_toan"></p>
                 </div>
                 <div class="col-4">
                     <p>Điểm lý</p>
-                    <input type="number" class="form-control" id="diemLy">
+                    <input class="form-control" id="diemLy">
                     <p id="error_diemLy" class="text text-danger"></p>
+                    <p class="text text-danger mix_max_ly"></p>
                 </div>
                 <div class="col-4">
                     <p>Điểm hóa</p>
-                    <input type="number" class="form-control" id="diemHoa">
+                    <input class="form-control" id="diemHoa">
                     <p id="error_diemHoa" class="text text-danger"></p>
+                    <p class="text text-danger mix_max_hoa"></p>
                 </div>
             </div>
             <div class="col-12 mt-2">
@@ -106,14 +114,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <!-- lib -->
-    <script scr="./utility_common_tools/method.js"></script>
 
+    <script src="./utility_common_tools/validation.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
     <script>
         if (!window.moment) {
             document.write('<script src="assets/plugins/moment/moment.min.js"><\/script>');
         }
     </script>
+
     <!-- models -->
     <script src="./models/SinhVien.js"></script>
 

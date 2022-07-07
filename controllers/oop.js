@@ -10,8 +10,7 @@ document.querySelector('#btnThemSinhVien').onclick = function() {
     // input: thông tin sinh vien: SinhVien
     let sv = new SinhVien();
     // Lấy thông tin từ giao diện đưa vào input sv 
-    //sv['maSinhVien'] 
-    sv.maSinhVien = document.querySelector('#maSinhVien').value;
+    sv['maSinhVien'] = document.querySelector('#maSinhVien').value;
     sv.tenSinhVien = document.querySelector('#tenSinhVien').value;
     sv.email = document.querySelector('#email').value;
     sv.matKhau = document.querySelector('#matKhau').value;
@@ -20,31 +19,34 @@ document.querySelector('#btnThemSinhVien').onclick = function() {
     sv.ngaySinh = ngaySinh.toLocaleDateString();
 
     sv.khoaHoc = document.querySelector('#khoaHoc').value;
-    sv.diemToan = Number(document.querySelector('#diemToan').value);
-    sv.diemLy = Number(document.querySelector('#diemLy').value);
-    sv.diemHoa = Number(document.querySelector('#diemHoa').value);
+    sv.diemToan = document.querySelector('#diemToan').value;
+    sv.diemLy = document.querySelector('#diemLy').value;
+    sv.diemHoa = document.querySelector('#diemHoa').value;
 
     //------------- Bắt lỗi khi người dùng nhập ko hợp lệ validation
+
     // .trim() loai bỏ khoảng trống của string
     let valid = true;
     // kiểm tra rỗng
     valid &= kiemTraRong(sv.maSinhVien, '#errorMaSinhVien', 'Mã sinh viên') & kiemTraRong(sv.tenSinhVien, '#errorTenSinhVien', 'Tên sinh viên') & kiemTraRong(sv.email, '#errorEmail', 'Email');
 
-    // kiểm tra định dạng
-    valid &= kiemTraKyTu(sv.tenSinhVien, '#errorTenSinhVien', 'Tên sinh viên ') & kiemTraSo(sv.diemToan, '#error_diemToan', ' Điểm toán') & kiemTraSo(sv.diemLy, '#error_diemLy', ' Điểm lý') & kiemTraSo(sv.diemHoa, '#error_diemHoa', ' Điểm hóa');
+    // kiem tra do dai
+    valid &= kiemTraDoDai(sv.matKhau, '.errorDoDai', 'Mật Khẩu', 6, 32)
 
-    // let regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    // let ketQua = regex.test(sv.email);
-    // console.log(ketQua)
+    // kiểm tra định dạng
+    let ngaySinhTest = moment(ngaySinh).format('YYYY-MM-DD');
+
+    valid &= kiemTraKyTu(sv.tenSinhVien, '.error_letterTenSinhVien', 'Tên sinh viên ') & kiemTraSo(sv.diemToan, '#error_diemToan', ' Điểm toán') & kiemTraSo(sv.diemLy, '#error_diemLy', ' Điểm lý') & kiemTraSo(sv.diemHoa, '#error_diemHoa', ' Điểm hóa') & kiemTraEmail(sv.email, '#regexEmail', 'Email') & kiemTraPW(sv.matKhau, '.errorPW', 'Mật khẩu') & kiemTraDate(ngaySinhTest, '.error-ngay', 'Ngày')
+
+    // kiem tra gia tri
+    valid &= kiemTraDiem(sv.diemToan, '.mix_max_toan', ' Điểm toán', 0, 10) & kiemTraDiem(sv.diemLy, '.mix_max_ly', ' Điểm lý', 0, 10) & kiemTraDiem(sv.diemHoa, '.mix_max_hoa', ' Điểm hóa', 0, 10)
+
 
 
     //kiểm tra biến cờ 
-    if (!valid) {
+    if (!!!valid) {
         return;
     }
-
-
-
 
     //-----------
 
@@ -170,7 +172,7 @@ function suaSinhVien(maSVClick) {
             document.querySelector('#tenSinhVien').value = sinhVien.tenSinhVien;
             document.querySelector('#email').value = sinhVien.email;
             document.querySelector('#matKhau').value = sinhVien.matKhau;
-            let day = moment(sinhVien.ngaySinh).format('YYYY-DD-MM');
+            let day = moment(sinhVien.ngaySinh).format('YYYY-MM-DD');
             document.querySelector('#ngaySinh').value = day;
             document.querySelector('#khoaHoc').value = sinhVien.khoaHoc;
             document.querySelector('#diemToan').value = sinhVien.diemToan;
@@ -189,7 +191,7 @@ document.querySelector('#capNhat').onclick = function() {
     capNhat.email = document.querySelector('#email').value;
     capNhat.matKhau = document.querySelector('#matKhau').value;
 
-    var ngaySinh = new Date(document.querySelector('#ngaySinh').value);
+    let ngaySinh = new Date(document.querySelector('#ngaySinh').value);
     capNhat.ngaySinh = ngaySinh.toLocaleDateString();
 
     capNhat.khoaHoc = document.querySelector('#khoaHoc').value;
