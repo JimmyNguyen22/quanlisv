@@ -31,16 +31,15 @@ document.querySelector('#btnThemSinhVien').onclick = function() {
     valid &= kiemTraRong(sv.maSinhVien, '#errorMaSinhVien', 'Mã sinh viên') & kiemTraRong(sv.tenSinhVien, '#errorTenSinhVien', 'Tên sinh viên') & kiemTraRong(sv.email, '#errorEmail', 'Email');
 
     // kiem tra do dai
-    valid &= kiemTraDoDai(sv.matKhau, '.errorDoDai', 'Mật Khẩu', 6, 32)
+    valid &= kiemTraDoDai(sv.matKhau, '.errorDoDai', 'Mật Khẩu', 6, 32);
 
     // kiểm tra định dạng
     let ngaySinhTest = moment(ngaySinh).format('YYYY-MM-DD');
 
-    valid &= kiemTraKyTu(sv.tenSinhVien, '.error_letterTenSinhVien', 'Tên sinh viên ') & kiemTraSo(sv.diemToan, '#error_diemToan', ' Điểm toán') & kiemTraSo(sv.diemLy, '#error_diemLy', ' Điểm lý') & kiemTraSo(sv.diemHoa, '#error_diemHoa', ' Điểm hóa') & kiemTraEmail(sv.email, '#regexEmail', 'Email') & kiemTraPW(sv.matKhau, '.errorPW', 'Mật khẩu') & kiemTraDate(ngaySinhTest, '.error-ngay', 'Ngày')
+    valid &= kiemTraKyTu(sv.tenSinhVien, '.error_letterTenSinhVien', 'Tên sinh viên ') & kiemTraSo(sv.diemToan, '#error_diemToan', ' Điểm toán') & kiemTraSo(sv.diemLy, '#error_diemLy', ' Điểm lý') & kiemTraSo(sv.diemHoa, '#error_diemHoa', ' Điểm hóa') & kiemTraEmail(sv.email, '#regexEmail', 'Email') & kiemTraPW(sv.matKhau, '.errorPW', 'Mật khẩu') & kiemTraDate(ngaySinhTest, '.error-ngay', 'Ngày');
 
     // kiem tra gia tri
-    valid &= kiemTraDiem(sv.diemToan, '.mix_max_toan', ' Điểm toán', 0, 10) & kiemTraDiem(sv.diemLy, '.mix_max_ly', ' Điểm lý', 0, 10) & kiemTraDiem(sv.diemHoa, '.mix_max_hoa', ' Điểm hóa', 0, 10)
-
+    valid &= kiemTraDiem(sv.diemToan, '.min_max_toan', ' Điểm toán', 0, 10) & kiemTraDiem(sv.diemLy, '.min_max_ly', ' Điểm lý', 0, 10) & kiemTraDiem(sv.diemHoa, '.min_max_hoa', ' Điểm hóa', 0, 10);
 
 
     //kiểm tra biến cờ 

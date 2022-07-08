@@ -18,7 +18,7 @@ function kiemTraKyTu(value, selectorError, name) {
 }
 
 function kiemTraSo(value, selectorError, name) {
-    let regexNumber = /^[0-9] + $/;
+    let regexNumber = /^[0-9]+$/;
     if (regexNumber.test(value)) {
         document.querySelector(selectorError).innerHTML = '';
         return true;
@@ -88,8 +88,8 @@ Letter:
 	
 Number:
 	interger:
-	/^[0-9]+$/
-
+	 /^[0-9]+$/;
+     
 Email:
 	/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 	
